@@ -1,6 +1,5 @@
 import express, { Application } from 'express';
 import cors from 'cors';
-import helmet from 'helmet';
 import morgan from 'morgan';
 import swaggerUi from 'swagger-ui-express';
 import swaggerSpec from './config/swaggerConfig';
@@ -11,11 +10,10 @@ import notFoundHandler from './middleware/notFoundHandler';
 const app: Application = express();
 
 // Security Middlewares
-app.use(helmet());
 app.use(cors());
 
 // Logging
-app.use(morgan('combined'));
+app.use(morgan('dev'));
 
 // Parsers
 app.use(express.json());
