@@ -33,6 +33,10 @@
 - npm o pnpm
 - MongoDB
 
+## ⚙️ Librerias utilizadas
+
+- date-fns v4.1.0
+
 ---
 
 ## 📦 Instalación

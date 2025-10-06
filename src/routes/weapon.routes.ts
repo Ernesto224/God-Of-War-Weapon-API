@@ -1,21 +1,21 @@
 import express, { Router } from 'express';
-import * as gameController from '../controllers/gameController';
+import * as weaponController from '../controllers/weaponController';
 
 const router: Router = express.Router();
 
 /**
  * @swagger
  * tags:
- *   name: Games
- *   description: Game management API endpoints
+ *   name: Weapons
+ *   description: Weapon management API endpoints
  */
 
 /**
  * @swagger
- * /games/all:
+ * /weapons/all:
  *   get:
- *     summary: Get all games with pagination
- *     tags: [Games]
+ *     summary: Get all weapons with pagination
+ *     tags: [Weapons]
  *     parameters:
  *       - in: query
  *         name: page
@@ -31,7 +31,7 @@ const router: Router = express.Router();
  *         description: Number of items per page
  *     responses:
  *       200:
- *         description: List of games retrieved successfully
+ *         description: List of weapons retrieved successfully
  *         content:
  *           application/json:
  *             schema:
@@ -42,7 +42,7 @@ const router: Router = express.Router();
  *                   example: true
  *                 message:
  *                   type: string
- *                   example: Games fetched successfully
+ *                   example: Weapons fetched successfully
  *                 data:
  *                   type: object
  *                   properties:
@@ -61,7 +61,7 @@ const router: Router = express.Router();
  *                     items:
  *                       type: array
  *                       items:
- *                         $ref: '#/components/schemas/Game'
+ *                         $ref: '#/components/schemas/Weapon'
  *       500:
  *         description: Server error
  *         content:
@@ -76,24 +76,24 @@ const router: Router = express.Router();
  *                   type: string
  *                   example: Error fetching weapons
  */
-router.get('/all', gameController.getAllGames);
+router.get('/all', weaponController.getAllWeapons);
 
 /**
  * @swagger
- * /games/{id}:
+ * /weapons/{id}:
  *   get:
- *     summary: Get a game by ID
- *     tags: [Games]
+ *     summary: Get a weapon by ID
+ *     tags: [Weapons]
  *     parameters:
  *       - in: path
  *         name: id
  *         required: true
  *         schema:
  *           type: string
- *         description: Game ID
+ *         description: Weapon ID
  *     responses:
  *       200:
- *         description: Game found successfully
+ *         description: Weapon found successfully
  *         content:
  *           application/json:
  *             schema:
@@ -104,11 +104,11 @@ router.get('/all', gameController.getAllGames);
  *                   example: true
  *                 message:
  *                   type: string
- *                   example: Game fetched successfully
+ *                   example: Weapon fetched successfully
  *                 data:
- *                   $ref: '#/components/schemas/Game'
+ *                   $ref: '#/components/schemas/Weapon'
  *       204:
- *         description: Game not found
+ *         description: Weapon not found
  *         content:
  *           application/json:
  *             schema:
@@ -120,6 +120,6 @@ router.get('/all', gameController.getAllGames);
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.get('/:id', gameController.getGame);
+router.get('/:id', weaponController.getWeapon);
 
 export default router;

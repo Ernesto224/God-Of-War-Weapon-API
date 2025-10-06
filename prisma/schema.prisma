@@ -25,6 +25,7 @@ model Weapon {
   id          String     @id @default(auto()) @map("_id") @db.ObjectId
   name        String
   description String
+  archives    String[]
   maxLevel    Int
   movements   Movement[]
   Game        Game?      @relation(fields: [gameId], references: [id])

@@ -21,6 +21,7 @@ export interface Weapon {
   id: string;
   name: string;
   description: string;
+  archives: string[];
   maxLevel: number;
   movements: Movement[];
 }
@@ -28,7 +29,7 @@ export interface Weapon {
 export interface Game {
   id: string;
   name: string;
-  releaseYear: Date;
+  releaseYear: string;
   summary: string;
 }
 

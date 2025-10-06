@@ -1,4 +1,4 @@
-import express, { Application, Request, Response } from 'express';
+import express, { Application } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
@@ -6,11 +6,11 @@ import swaggerUi from 'swagger-ui-express';
 import swaggerSpec from './config/swaggerConfig';
 import routes from './routes/index.routes';
 import errorHandler from './middleware/errorHandler';
-import { ApplicationResponse } from './types/types';
+import notFoundHandler from './middleware/notFoundHandler';
 
 const app: Application = express();
 
-// Middlewares de seguridad
+// Security Middlewares
 app.use(helmet());
 app.use(cors());
 
@@ -24,21 +24,13 @@ app.use(express.urlencoded({ extended: true }));
 // Swagger
 app.use('/api/swagger', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-// Rutas
+// Routes
 app.use('/api', routes);
 
-// Manejo de rutas no encontradas
-app.use((req: Request, res: Response, next) => {
-  // Verificar si ninguna ruta anterior manejó la request
-  const response: ApplicationResponse = {
-    success: false,
-    message: `Ruta ${req.originalUrl} no encontrada`
-  };
-  
-  res.status(404).json(response);
-});
+// Handle 404 errors (always after routes)
+app.use(notFoundHandler);
 
-// Manejo de errores
+// Error handling (always last)
 app.use(errorHandler);
 
 export default app;
