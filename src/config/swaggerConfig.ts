@@ -13,6 +13,10 @@ const swaggerOptions = {
         url: 'http://localhost:3001/api',
         description: 'Development server',
       },
+      {
+        url: 'https://god-of-war-weapon-api-uhh3.vercel.app/api',
+        description: 'Production server',
+      }
     ],
   },
   apis: ['./src/types/swaggerSchemas.ts','./src/routes/*.ts'], // Path to your API route files
