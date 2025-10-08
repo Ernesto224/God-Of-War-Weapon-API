@@ -1,17 +1,14 @@
-// Basic api response structure
 export interface ApplicationResponse<T = any> {
   success: boolean;
   message: string;
   data?: T | undefined;
 }
 
-// Object config
-export interface Config {
+export interface ServerConfiguration {
   port: number;
   nodeEnv: string;
 }
 
-// DTO's
 export interface Movement {
   unlockLevel: number;
   combination: string;
@@ -33,7 +30,13 @@ export interface Game {
   summary: string;
 }
 
-export interface List <T = any> {
+export interface PaginationParams {
+  page: number;
+  limit: number;
+  skip: number;
+}
+
+export interface List<T = any> {
   count: number;
   pages: number;
   page: number;

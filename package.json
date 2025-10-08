@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon",
-    "build": "pnpm prisma generate && tsc -p .",
+    "build": "pnpm prisma generate && tsc",
+    "vercel-build": "prisma generate && tsc",
     "start": "node dist/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
