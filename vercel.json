@@ -1,5 +1,5 @@
 {
-  "version": 2,
+  "version": 1,
   "builds": [
     {
       "src": "dist/server.js",
@@ -20,6 +20,7 @@
     }
   ],
   "env": {
+    "PORT": "3001",
     "NODE_ENV": "production",
     "DATABASE_URL": "mongodb+srv://ev402648:QqWZjZs8CWCnwU51@servicios-de-prueba.vdfybul.mongodb.net/God-Of-War-Weapon-API"
   }
