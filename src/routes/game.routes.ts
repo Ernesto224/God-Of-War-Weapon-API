@@ -7,61 +7,51 @@ const router: Router = express.Router();
  * @swagger
  * tags:
  *   name: Games
- *   description: Game management API endpoints
+ *   description: Operations related to God of War games
  */
 
 /**
  * @swagger
  * /games/all:
  *   get:
- *     summary: Get all games with pagination
+ *     summary: Retrieve all games
+ *     description: Fetches a paginated list of all God of War games
  *     tags: [Games]
  *     parameters:
  *       - in: query
  *         name: page
  *         schema:
  *           type: integer
+ *           minimum: 1
  *           default: 1
- *         description: Page number
+ *         description: The page of results to retrieve
  *       - in: query
  *         name: limit
  *         schema:
  *           type: integer
+ *           minimum: 1
+ *           maximum: 50
  *           default: 10
- *         description: Number of items per page
+ *         description: The number of games to retrieve per page
  *     responses:
  *       200:
- *         description: List of games retrieved successfully
+ *         description: Successfully retrieved list of games
  *         content:
  *           application/json:
  *             schema:
- *               type: object
- *               properties:
- *                 success:
- *                   type: boolean
- *                   example: true
- *                 message:
- *                   type: string
- *                   example: Games fetched successfully
- *                 data:
- *                   type: object
+ *               allOf:
+ *                 - $ref: '#/components/schemas/ApplicationResponse'
+ *                 - type: object
  *                   properties:
- *                     count:
- *                       type: integer
- *                       description: Total number of weapons
- *                       example: 15
- *                     pages:
- *                       type: integer
- *                       description: Total number of pages
- *                       example: 2
- *                     page:
- *                       type: integer
- *                       description: Current page number
- *                       example: 1
- *                     items:
- *                       type: array
- *                       items:
- *                         $ref: '#/components/schemas/Game'
+ *                     data:
+ *                       allOf:
+ *                         - $ref: '#/components/schemas/PaginatedResponse'
+ *                         - type: object
+ *                           properties:
+ *                             items:
+ *                               type: array
+ *                               items:
+ *                                 $ref: '#/components/schemas/Game'
  *       500:
  *         description: Server error
  *         content:

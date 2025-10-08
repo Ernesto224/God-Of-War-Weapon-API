@@ -6,20 +6,20 @@ const swaggerOptions = {
     info: {
       title: 'God-Of-War-Weapon-API',
       version: '1.0.0',
-      description: 'A sample API for demonstration purposes',
+      description: 'API for managing God of War games and weapons information',
     },
     servers: [
       {
-        url: 'http://localhost:3001/api',
-        description: 'Development server',
-      },
-      {
-        url: 'https://god-of-war-weapon-api-uhh3.vercel.app/api',
-        description: 'Production server',
+        url: process.env.VERCEL_URL 
+          ? `https://${process.env.VERCEL_URL}/api`
+          : 'http://localhost:3001/api',
+        description: process.env.NODE_ENV === 'production' 
+          ? 'Production server' 
+          : 'Development server',
       }
     ],
   },
-  apis: ['src/types/swaggerSchemas.ts','src/routes/*.ts'], // Path to your API route files
+  apis: ['src/types/swaggerSchemas.ts','src/routes/*.ts'],
 };
 
 const swaggerSpec = swaggerJSDoc(swaggerOptions);

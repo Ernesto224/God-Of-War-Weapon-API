@@ -1,9 +1,9 @@
 import dotenv from 'dotenv';
-import { Config } from '../types/types';
+import { ServerConfiguration } from '../types/types';
 
 dotenv.config();
 
-const config: Config = {
+const config: ServerConfiguration = {
   port: parseInt(process.env.PORT || '3000', 10),
   nodeEnv: process.env.NODE_ENV || 'development'
 };

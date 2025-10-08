@@ -1,55 +1,65 @@
 import { Request, Response, NextFunction } from 'express';
-import { List, Game, ApplicationResponse } from '../types/types';
+import { Game, ApplicationResponse } from '../types/types';
 import prismaClient from '../config/prismaConfig';
 import { successCode, noContentCode, badRequestCode, notFoundCode } from '../utils/codes';
 import { format } from 'date-fns';
+import {
+    calculatePagination,
+    createPaginatedResponse,
+    createErrorResponse,
+    createSuccessResponse
+} from '../services/responseService';
 
+/**
+ * Format a game from database to API response format
+ */
+const formatGame = (game: any): Game => ({
+    id: game.id,
+    name: game.name,
+    releaseYear: format(game.releaseYear, 'dd-MM-yyyy'),
+    summary: game.summary
+});
+
+/**
+ * Fetch games from database with pagination
+ */
+const fetchPaginatedGames = async ({ skip, limit }: { skip: number, limit: number }) => {
+    return Promise.all([
+        prismaClient.game.findMany({
+            skip,
+            take: limit,
+            orderBy: { releaseYear: 'desc' }
+        }),
+        prismaClient.game.count()
+    ]);
+};
+
+/**
+ * Get all games with pagination
+ */
 export const getAllGames = async (req: Request, res: Response, next: NextFunction) => {
     try {
+        const pagination = calculatePagination(
+            Number(req.query.page),
+            Number(req.query.limit)
+        );
 
-        // Page information
-        const page = Number(req.query.page) || 1;
-        const limit = Number(req.query.limit) || 10;
-        const skip = (page - 1) * limit;
+        const [games, totalCount] = await fetchPaginatedGames(pagination);
 
-        // Execute async query to mongo db, not include weapons only the games
-        const [dataBaseItems, count] = await Promise.all([
-            prismaClient.game.findMany({
-                skip,
-                take: limit,
-                orderBy: { releaseYear: 'desc' }, // Sort Desc
-            }),
-            prismaClient.game.count(),
-        ]);
-
-        if (count == 0) {
-
-            const response: ApplicationResponse = {
-                success: true,
-                message: 'Games fetched failed, not game exists'
-            };
-
-            return res.status(noContentCode).json(response);
+        if (totalCount === 0) {
+            return res.status(noContentCode).json(
+                createErrorResponse('No games found in the database', true)
+            );
         }
 
-        // This method formats the date to "dd-MM-yyyy"
-        const items = dataBaseItems.map(game => ({
-            ...game,
-            releaseYear: format(game.releaseYear, "dd-MM-yyyy"),
-        }));
-
-        const pages = Math.ceil(count / limit);
-
-        const response: ApplicationResponse<List<Game>> = {
-            success: true,
-            message: 'Games fetched successfully',
-            data: {
-                count,
-                pages,
-                page,
-                items,
-            },
-        };
+        const formattedGames = games.map(formatGame);
+        const response = createPaginatedResponse(
+            formattedGames,
+            totalCount,
+            pagination.page,
+            pagination.limit,
+            'Games fetched successfully'
+        );
 
         return res.status(successCode).json(response);
 
@@ -60,52 +70,34 @@ export const getAllGames = async (req: Request, res: Response, next: NextFunctio
     }
 }
 
+/**
+ * Get a single game by ID
+ */
 export const getGame = async (req: Request, res: Response, next: NextFunction) => {
     try {
+        const { id } = req.params;
 
-        // Verify existing id in the request params
-        if (!req.params.id) {
-
-            const response: ApplicationResponse = {
-                success: false,
-                message: 'Game id is required'
-            };
-
-            return res.status(badRequestCode).json(response);
+        if (!id) {
+            return res.status(badRequestCode).json(
+                createErrorResponse('Game ID is required')
+            );
         }
 
-        // Game id information
-        const requestId: string = req.params.id;
-
-        // Execute async query to mongo db, not include weapons only the games
-        const game = await prismaClient.game.findFirst(
-            {
-                where: {
-                    id: requestId
-                }
-            }
-        );
+        const game = await prismaClient.game.findFirst({
+            where: { id }
+        });
 
         if (!game) {
-
-            const response: ApplicationResponse = {
-                success: false,
-                message: 'Game fetched failed, not game exists'
-            };
-
-            return res.status(notFoundCode).json(response);
+            return res.status(notFoundCode).json(
+                createErrorResponse('Game not found')
+            );
         }
 
-        const response: ApplicationResponse<Game> = {
-            success: true,
-            message: 'Game fetched successfully',
-            data: {
-                id: game.id,
-                name: game.name,
-                releaseYear: format(game.releaseYear, "dd-MM-yyyy"),
-                summary: game.summary,
-            },
-        };
+        const formattedGame = formatGame(game);
+        const response = createSuccessResponse(
+            formattedGame,
+            'Game fetched successfully'
+        );
 
         return res.status(successCode).json(response);
 
