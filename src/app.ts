@@ -28,7 +28,7 @@ const configureMiddleware = (app: Application): void => {
  * @param app Express application instance
  */
 const configureSwagger = (app: Application): void => {
-    app.use('/api/swagger', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+    app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 };
 
 /**
