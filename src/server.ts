@@ -11,7 +11,7 @@ const logServerStartup = (config: ServerConfiguration): void => {
     console.log(`🚀 Server Status: Running`);
     console.log(`🌐 Port: ${config.port}`);
     console.log(`🌍 Environment: ${config.nodeEnv}`);
-    console.log(`📚 API Docs: http://localhost:${config.port}/api/swagger`);
+    console.log(`📚 API Docs: http://localhost:${config.port}/swagger`);
     console.log('=============================\n');
 };
 
