@@ -44,6 +44,6 @@
     "skipLibCheck": true,
     "moduleResolution": "node"
   },
-  "include": ["./src"],
+  "include": ["./src", "src/config/swaggerConfig.ts"],
   "exclude": ["./node_modules", "./dist", "./prisma", "./generated"]
 }
