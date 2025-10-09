@@ -28,7 +28,21 @@ const configureMiddleware = (app: Application): void => {
  * @param app Express application instance
  */
 const configureSwagger = (app: Application): void => {
-    app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+    const swaggerUiOptions = {
+        customCss: '.swagger-ui .topbar { display: none }',
+        customSiteTitle: 'God of War Weapons API Documentation',
+        customfavIcon: '/favicon.ico'
+    };
+    
+    // Serve Swagger UI
+    app.use('/api-docs', swaggerUi.serve);
+    app.get('/api-docs', swaggerUi.setup(swaggerSpec, swaggerUiOptions));
+    
+    // Expose OpenAPI spec as JSON
+    app.get('/api-docs.json', (req, res) => {
+        res.setHeader('Content-Type', 'application/json');
+        res.send(swaggerSpec);
+    });
 };
 
 /**
