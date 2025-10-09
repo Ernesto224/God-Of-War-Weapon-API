@@ -38,7 +38,12 @@ const configureSwagger = (app: Application): void => {
 const configureRoutes = (app: Application): void => {
     // API routes
     app.use('/api', routes);
+};
 
+/**
+ * Configure API error handling
+ */
+const configureErrorHandling = (app: Application): void => {
     // Error handling (order is important)
     app.use(notFoundHandler);  // Handle 404 errors
     app.use(errorHandler);     // Handle all other errors
@@ -54,6 +59,7 @@ const initializeApp = (): Application => {
     configureMiddleware(app);
     configureSwagger(app);
     configureRoutes(app);
+    configureErrorHandling(app);
 
     return app;
 };
