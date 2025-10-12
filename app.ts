@@ -2,10 +2,10 @@ import express, { Application } from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
 import swaggerUi from 'swagger-ui-express';
-import swaggerSpec from './config/swaggerConfig';
-import routes from './routes/index.routes';
-import errorHandler from './middleware/errorHandler';
-import notFoundHandler from './middleware/notFoundHandler';
+import swaggerSpec from './src/config/swaggerConfig';
+import routes from './src/routes/index.routes';
+import errorHandler from './src/middleware/errorHandler';
+import notFoundHandler from './src/middleware/notFoundHandler';
 
 /**
  * Configure middleware for the Express application
