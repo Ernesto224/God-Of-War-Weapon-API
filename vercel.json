@@ -6,47 +6,29 @@
       "use": "@vercel/node"
     }
   ],
-  "routes": [
-    {
-      "src": "/api-docs/swagger-ui.css",
-      "dest": "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.10.5/swagger-ui.css"
-    },
-    {
-      "src": "/api-docs/swagger-ui-bundle.js",
-      "dest": "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.10.5/swagger-ui-bundle.js"
-    },
-    {
-      "src": "/api-docs/swagger-ui-standalone-preset.js",
-      "dest": "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.10.5/swagger-ui-standalone-preset.js"
-    },
-    {
-      "src": "/api-docs/favicon-16x16.png",
-      "dest": "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.10.5/favicon-16x16.png"
-    },
-    {
-      "src": "/api-docs/favicon-32x32.png",
-      "dest": "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.10.5/favicon-32x32.png"
-    },
-    {
-      "src": "/api-docs/(.*)",
-      "dest": "/api-docs"
-    },
-    {
-      "src": "/api/(.*)",
-      "dest": "/index.ts"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/index.ts"
-    }
-  ],
   "rewrites": [
     {
-      "source": "/api-docs",
-      "destination": "/index.ts"
+      "source": "/api-docs/swagger-ui.css",
+      "destination": "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.10.5/swagger-ui.css"
     },
     {
-      "source": "/api/:path*",
+      "source": "/api-docs/swagger-ui-bundle.js",
+      "destination": "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.10.5/swagger-ui-bundle.js"
+    },
+    {
+      "source": "/api-docs/swagger-ui-standalone-preset.js",
+      "destination": "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.10.5/swagger-ui-standalone-preset.js"
+    },
+    {
+      "source": "/api-docs/favicon-16x16.png",
+      "destination": "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.10.5/favicon-16x16.png"
+    },
+    {
+      "source": "/api-docs/favicon-32x32.png",
+      "destination": "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.10.5/favicon-32x32.png"
+    },
+    {
+      "source": "/(.*)",
       "destination": "/index.ts"
     }
   ]
