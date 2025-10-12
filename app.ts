@@ -6,6 +6,7 @@ import swaggerSpec from './src/config/swaggerConfig';
 import routes from './src/routes/index.routes';
 import errorHandler from './src/middleware/errorHandler';
 import notFoundHandler from './src/middleware/notFoundHandler';
+import { ApplicationResponse } from './src/types/types';
 
 /**
  * Configure middleware for the Express application
@@ -57,6 +58,13 @@ const initializeApp = (): Application => {
     const app: Application = express();
 
     configureMiddleware(app);
+    app.use('/', (req, res) => {
+    var response: ApplicationResponse = {
+        success: true,
+        message: 'Welcome to the God of War Weapons API'
+    };
+    return res.status(200).json(response);
+});
     configureSwagger(app);
     configureRoutes(app);
     configureErrorHandling(app);

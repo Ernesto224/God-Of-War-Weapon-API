@@ -6,6 +6,7 @@ const router: Router = express.Router();
 
 // Main routes
 router.use('/games', gameRoutes);
+
 router.use('/weapons', weaponRoutes);
 
 export default router;
