@@ -31,20 +31,8 @@ const configureMiddleware = (app: Application): void => {
  */
 const configureSwagger = (app: Application): void => {
     // Serve Swagger UI at /api-docs
-    const swaggerOptions = {
-        customCss: `
-            .swagger-ui .topbar { display: none }
-            .swagger-ui .info { margin: 20px 0 }
-        `,
-        customSiteTitle: 'God of War Weapons API Documentation',
-        swaggerOptions: {
-            persistAuthorization: true,
-            displayRequestDuration: true,
-        },
-    };
-
     app.use('/api-docs', swaggerUi.serve);
-    app.get('/api-docs', swaggerUi.setup(swaggerSpec, swaggerOptions));
+    app.get('/api-docs', swaggerUi.setup(swaggerSpec));
 };
 
 /**
