@@ -113,7 +113,7 @@ const logServerStartup = (config: ServerConfiguration): void => {
 const startServer = async (config: ServerConfiguration): Promise<void> => {
     try {
         // CLAVE: Solo escuchar el puerto si NO es Vercel/Producción
-        if (process.env.NODE_ENV !== 'production' || !process.env.VERCEL) {
+        if (process.env.NODE_ENV === 'development') {
             const port = config.port || 3000;
 
             await new Promise<void>((resolve) => {
