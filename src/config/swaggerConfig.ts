@@ -24,7 +24,7 @@ const swaggerOptions = {
     ],
   },
   apis: [
-    './swagger.yaml'
+    'swagger.yaml'
   ],
 };
 
