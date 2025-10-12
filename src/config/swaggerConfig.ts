@@ -23,7 +23,11 @@ const swaggerOptions = {
       }
     ],
   },
-  apis: ['./swagger.yaml'],
+  apis: [
+    './swagger.yaml',
+    './src/routes/*.routes.ts',
+    './src/types/swaggerSchemas.ts'
+  ],
 };
 
 const swaggerSpec = swaggerJSDoc(swaggerOptions);
