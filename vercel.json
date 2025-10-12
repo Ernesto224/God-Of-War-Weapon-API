@@ -26,10 +26,6 @@
     {
       "source": "/api-docs/favicon-32x32.png",
       "destination": "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.10.5/favicon-32x32.png"
-    },
-    {
-      "source": "/(.*)",
-      "destination": "/index.ts"
     }
   ]
 }
