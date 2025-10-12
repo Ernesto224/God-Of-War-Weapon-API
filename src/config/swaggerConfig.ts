@@ -1,4 +1,5 @@
 import swaggerJSDoc from 'swagger-jsdoc';
+import path from 'path';
 
 const swaggerOptions = {
   definition: {
@@ -24,7 +25,10 @@ const swaggerOptions = {
     ],
   },
   apis: [
-    'swagger.yaml'
+    path.join(__dirname, '../swagger.yaml'),
+    path.join(__dirname, '../../swagger.yaml'),
+    './swagger.yaml',
+    './src/swagger.yaml'
   ],
 };
 
