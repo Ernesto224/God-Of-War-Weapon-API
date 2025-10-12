@@ -31,14 +31,7 @@ const configureMiddleware = (app: Application): void => {
  */
 const configureSwagger = (app: Application): void => {
     // Serve Swagger UI at /api-docs
-    app.use('/api-docs', swaggerUi.serve);
-    app.get('/api-docs', swaggerUi.setup(swaggerSpec));
-
-    // Expose OpenAPI spec as JSON
-    app.get('/api-docs.json', (req, res) => {
-        res.setHeader('Content-Type', 'application/json');
-        res.send(swaggerSpec);
-    });
+    app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 };
 
 /**
