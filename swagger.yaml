@@ -3,9 +3,6 @@ info:
   title: God-Of-War-Weapon-API
   version: 1.0.0
   description: API for managing God of War games and weapons information
-servers:
-  - url: 'http://localhost:3001/api'
-    description: Development server
 tags:
   - name: Games
     description: Operations related to God of War games

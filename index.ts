@@ -30,32 +30,15 @@ const configureMiddleware = (app: Application): void => {
  * @param app Express application instance
  */
 const configureSwagger = (app: Application): void => {
-    // Estas opciones FUERZAN al HTML a usar las rutas de assets que definimos
-    // en los rewrites de vercel.json: /api/swagger/
-    const swaggerCustomOptions = {
-        customCssUrl: '/api/swagger/swagger-ui.css',
-        customJs: [
-            '/api/swagger/swagger-ui-bundle.js',
-            '/api/swagger/swagger-ui-standalone-preset.js',
-        ],
-        swaggerOptions: {
-            url: '/api/swagger-json',
-            persistAuthorization: true
-        }
-    };
+    // Serve Swagger UI at /api-docs
+    app.use('/api-docs', swaggerUi.serve);
+    app.get('/api-docs', swaggerUi.setup(swaggerSpec));
 
-    // Endpoint para servir el JSON
-    app.get('/api/swagger-json', (req, res) => {
+    // Expose OpenAPI spec as JSON
+    app.get('/api-docs.json', (req, res) => {
         res.setHeader('Content-Type', 'application/json');
         res.send(swaggerSpec);
     });
-
-    // La ruta UI DEBE ser '/api/swagger' para que los rewrites funcionen
-    app.use(
-        '/api/swagger',
-        swaggerUi.serve,
-        swaggerUi.setup(swaggerSpec, swaggerCustomOptions)
-    );
 };
 
 /**

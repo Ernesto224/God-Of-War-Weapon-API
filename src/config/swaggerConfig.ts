@@ -15,8 +15,8 @@ const swaggerOptions = {
     servers: [
       {
         url: process.env.VERCEL_URL
-          ? `https://${process.env.VERCEL_URL}/api` // Asegura el /api en producción
-          : 'http://localhost:3001/api', // Asegura el /api en desarrollo
+          ? `https://${process.env.VERCEL_URL}`
+          : 'http://localhost:3001',
         description: process.env.NODE_ENV === 'production'
           ? 'Production server'
           : 'Development server'
