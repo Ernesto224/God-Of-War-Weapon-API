@@ -1,11 +1,7 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "index.ts",
-      "use": "@vercel/node"
-    }
-  ],
+  "buildCommand": "prisma generate && tsc",
+  "installCommand": "pnpm install",
   "rewrites": [
     {
       "source": "/api-docs/swagger-ui.css",
@@ -26,6 +22,10 @@
     {
       "source": "/api-docs/favicon-32x32.png",
       "destination": "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.10.5/favicon-32x32.png"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.ts"
     }
   ]
 }
