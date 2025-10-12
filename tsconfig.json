@@ -2,7 +2,7 @@
   // Visit https://aka.ms/tsconfig to read more about this file
   "compilerOptions": {
     // File Layout
-    "rootDir": "src",
+    "rootDir": "./",
     "outDir": "dist",
 
     // Environment Settings
@@ -44,6 +44,6 @@
     "skipLibCheck": true,
     "moduleResolution": "node"
   },
-  "include": ["./src", "src/config/swaggerConfig.ts"],
+  "include": ["./src", "src/config/swaggerConfig.ts", "server.ts"],
   "exclude": ["./node_modules", "./dist", "./prisma", "./generated"]
 }

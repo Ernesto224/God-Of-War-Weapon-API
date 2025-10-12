@@ -2,7 +2,7 @@
   "watch": [],
   "ext": "ts,json,env",
   "ignore": ["src/**/*.test.ts", "node_modules", "dist", ".gitignore", "README.md", "prisma", "generated"],
-  "exec": "ts-node-dev --respawn --transpile-only src/server.ts",
+  "exec": "ts-node-dev --respawn --transpile-only server.ts",
   "env": {
     "NODE_ENV": "development"
   },

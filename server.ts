@@ -1,6 +1,6 @@
-import app from './app';
-import config from './config/serverConfig';
-import { ServerConfiguration } from './types/types';
+import app from './src/app';
+import config from './src/config/serverConfig';
+import { ServerConfiguration } from './src/types/types';
 
 /**
  * Log server startup information
@@ -11,7 +11,7 @@ const logServerStartup = (config: ServerConfiguration): void => {
     console.log(`🚀 Server Status: Running`);
     console.log(`🌐 Port: ${config.port}`);
     console.log(`🌍 Environment: ${config.nodeEnv}`);
-    console.log(`📚 API Docs: http://localhost:${config.port}/swagger`);
+    console.log(`📚 API Docs: http://localhost:${config.port}/api/swagger`);
     console.log('=============================\n');
 };
 
