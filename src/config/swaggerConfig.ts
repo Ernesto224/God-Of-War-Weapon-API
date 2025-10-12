@@ -15,8 +15,8 @@ const swaggerOptions = {
     servers: [
       {
         url: process.env.VERCEL_URL 
-          ? `https://${process.env.VERCEL_URL}/api`
-          : 'http://localhost:3001/api',
+          ? `https://${process.env.VERCEL_URL}`
+          : 'http://localhost:3001',
         description: process.env.NODE_ENV === 'production' 
           ? 'Production server' 
           : 'Development server'
@@ -24,9 +24,7 @@ const swaggerOptions = {
     ],
   },
   apis: [
-    './swagger.yaml',
-    './src/routes/*.routes.ts',
-    './src/types/swaggerSchemas.ts'
+    './swagger.yaml'
   ],
 };
 
