@@ -30,24 +30,32 @@ const configureMiddleware = (app: Application): void => {
  * @param app Express application instance
  */
 const configureSwagger = (app: Application): void => {
-    const swaggerUiOptions = {
-        customCss: '.swagger-ui .topbar { display: none }',
-        customSiteTitle: 'God of War Weapons API Documentation',
-        customfavIcon: '/favicon.ico',
+    // Estas opciones FUERZAN al HTML a usar las rutas de assets que definimos
+    // en los rewrites de vercel.json: /api/swagger/
+    const swaggerCustomOptions = {
+        customCssUrl: '/api/swagger/swagger-ui.css',
+        customJs: [
+            '/api/swagger/swagger-ui-bundle.js',
+            '/api/swagger/swagger-ui-standalone-preset.js',
+        ],
         swaggerOptions: {
+            url: '/api/swagger-json',
             persistAuthorization: true
         }
     };
-    
-    // Serve Swagger UI at /api-docs
-    app.use('/api-docs', swaggerUi.serve);
-    app.get('/api-docs', swaggerUi.setup(swaggerSpec, swaggerUiOptions));
-    
-    // Expose OpenAPI spec as JSON
-    app.get('/api-docs.json', (req, res) => {
+
+    // Endpoint para servir el JSON
+    app.get('/api/swagger-json', (req, res) => {
         res.setHeader('Content-Type', 'application/json');
         res.send(swaggerSpec);
     });
+
+    // La ruta UI DEBE ser '/api/swagger' para que los rewrites funcionen
+    app.use(
+        '/api/swagger',
+        swaggerUi.serve,
+        swaggerUi.setup(swaggerSpec, swaggerCustomOptions)
+    );
 };
 
 /**
@@ -104,14 +112,17 @@ const logServerStartup = (config: ServerConfiguration): void => {
  */
 const startServer = async (config: ServerConfiguration): Promise<void> => {
     try {
-        const port = config.port || 3000;
-        
-        await new Promise<void>((resolve) => {
-            app.listen(port, () => {
-                logServerStartup(config);
-                resolve();
+        // CLAVE: Solo escuchar el puerto si NO es Vercel/Producción
+        if (process.env.NODE_ENV !== 'production' || !process.env.VERCEL) {
+            const port = config.port || 3000;
+
+            await new Promise<void>((resolve) => {
+                app.listen(port, () => {
+                    logServerStartup(config);
+                    resolve();
+                });
             });
-        });
+        }
     } catch (error) {
         console.error('❌ Failed to start server:', error);
         process.exit(1);

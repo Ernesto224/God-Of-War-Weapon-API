@@ -2,22 +2,22 @@
     "version": 2,
     "builds": [
         {
-            "src": "dist/index.js",
+            "src": "index.ts", 
             "use": "@vercel/node"
         }
     ],
-    "routes": [
+    "rewrites": [
         {
-            "src": "/api-docs/(.*)",
-            "dest": "dist/index.js"
+            "source": "/api/swagger/swagger-ui.css",
+            "destination": "/api"
         },
         {
-            "src": "/api/(.*)",
-            "dest": "dist/index.js"
+            "source": "/api/swagger/swagger-ui-bundle.js",
+            "destination": "/api"
         },
         {
-            "src": "/(.*)",
-            "dest": "dist/index.js"
+            "source": "/api/swagger/swagger-ui-standalone-preset.js",
+            "destination": "/api"
         }
     ],
     "headers": [
