@@ -9,7 +9,7 @@ tags:
   - name: Weapons
     description: Operations related to weapons in God of War
 paths:
-  /games/all:
+  /api/games/all:
     get:
       summary: Retrieve all games
       description: Fetches a paginated list of all God of War games
@@ -63,7 +63,7 @@ paths:
                   message:
                     type: string
                     example: Error fetching weapons
-  /games/{id}:
+  /api/games/{id}:
     get:
       summary: Get a game by ID
       tags:
@@ -103,7 +103,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-  /weapons/all:
+  /api/weapons/all:
     get:
       summary: Retrieve all weapons
       description: Fetches a paginated list of all weapons with their movements
@@ -157,7 +157,7 @@ paths:
                   message:
                     type: string
                     example: Error fetching weapons
-  /weapons/{id}:
+  /api/weapons/{id}:
     get:
       summary: Get a weapon by ID
       tags:
