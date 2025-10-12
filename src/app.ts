@@ -28,7 +28,37 @@ const configureMiddleware = (app: Application): void => {
  * @param app Express application instance
  */
 const configureSwagger = (app: Application): void => {
-    app.use('/api/swagger', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+    
+    // 1. Opciones personalizadas para forzar rutas absolutas
+    // Esto asegura que el HTML generado por Swagger pida los archivos JS/CSS
+    // con el prefijo /api/swagger/ que Vercel enruta a tu Express App.
+    const swaggerCustomOptions = {
+        customCssUrl: '/api/swagger/swagger-ui.css',
+        customJs: [
+            '/api/swagger/swagger-ui-bundle.js',
+            '/api/swagger/swagger-ui-standalone-preset.js',
+        ],
+        swaggerOptions: {
+            // Esto le dice a Swagger dónde buscar la especificación JSON/YAML
+            url: '/api/swagger-json' 
+        }
+    };
+
+    // 2. Endpoint para servir la especificación JSON (necesario)
+    app.get('/api/swagger-json', (req, res) => {
+        res.setHeader('Content-Type', 'application/json');
+        res.send(swaggerSpec); // `swaggerSpec` se importa de './config/swaggerConfig'
+    });
+
+    // 3. Montar la documentación
+    app.use(
+        '/api/swagger',
+        // **Clave**: swaggerUi.serveFiles se encarga de servir los activos estáticos 
+        // (JS/CSS) desde node_modules bajo este path.
+        swaggerUi.serveFiles(swaggerSpec, swaggerCustomOptions), 
+        // swaggerUi.setup genera el HTML y usa las rutas absolutas forzadas arriba.
+        swaggerUi.setup(swaggerSpec, swaggerCustomOptions)
+    );
 };
 
 /**
