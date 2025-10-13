@@ -6,7 +6,7 @@ export interface ApplicationResponse<T = any> {
 
 export interface ServerConfiguration {
   port: number;
-  nodeEnv: string;
+  env: string;
   hostUrl: string;
   allowOrigins: string[];
   allowMethods: string[];

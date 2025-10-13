@@ -18,7 +18,7 @@ const swaggerSpec = (config: ServerConfiguration) => {
       servers: [
         {
           url: config.hostUrl,
-          description: `Server running at ${config.hostUrl} in ${config.nodeEnv} mode`
+          description: `Server ${config.env} mode`
         }
       ],
     },

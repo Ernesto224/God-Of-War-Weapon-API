@@ -83,7 +83,7 @@ const logServerStartup = (config: ServerConfiguration): void => {
     console.log('\n=== God of War Weapons API ===');
     console.log(`🚀 Server Status: Running`);
     console.log(`🌐 Port: ${config.port}`);
-    console.log(`🌍 Environment: ${config.nodeEnv}`);
+    console.log(`🌍 Environment: ${config.env}`);
     console.log(`📚 API Docs: ${config.hostUrl}/api-docs`);
     console.log('=============================\n');
 };
@@ -95,7 +95,7 @@ const logServerStartup = (config: ServerConfiguration): void => {
 const startServer = async (config: ServerConfiguration): Promise<void> => {
     try {
         // CLAVE: Solo escuchar el puerto si NO es Vercel/Producción
-        if (config.nodeEnv === 'development') {
+        if (config.env === 'development') {
             const port = config.port || 3000;
 
             await new Promise<void>((resolve) => {
