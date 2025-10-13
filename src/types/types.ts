@@ -7,6 +7,9 @@ export interface ApplicationResponse<T = any> {
 export interface ServerConfiguration {
   port: number;
   nodeEnv: string;
+  hostUrl: string;
+  allowOrigins: string[];
+  allowMethods: string[];
 }
 
 export interface Movement {

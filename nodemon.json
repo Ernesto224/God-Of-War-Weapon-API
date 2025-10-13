@@ -3,8 +3,5 @@
   "ext": "ts,json,env",
   "ignore": ["src/**/*.test.ts", "node_modules", "dist", ".gitignore", "README.md", "prisma", "generated"],
   "exec": "ts-node-dev --respawn --transpile-only index.ts",
-  "env": {
-    "NODE_ENV": "development"
-  },
   "delay": "500"
 }

@@ -15,7 +15,12 @@ import { ServerConfiguration } from './src/types/types';
  */
 const configureMiddleware = (app: Application): void => {
     // Security middleware
-    app.use(cors());
+    const corsOptions = {
+        origin: config.allowOrigins,
+        methods: config.allowMethods,
+        optionsSuccessStatus: 200
+    }
+    app.use(cors(corsOptions));
 
     // Request logging
     app.use(morgan('dev'));
@@ -32,7 +37,7 @@ const configureMiddleware = (app: Application): void => {
 const configureSwagger = (app: Application): void => {
     // Serve Swagger UI at /api-docs
     app.use('/api-docs', swaggerUi.serve);
-    app.get('/api-docs', swaggerUi.setup(swaggerSpec));
+    app.get('/api-docs', swaggerUi.setup(swaggerSpec(config)));
 };
 
 /**
@@ -79,7 +84,7 @@ const logServerStartup = (config: ServerConfiguration): void => {
     console.log(`🚀 Server Status: Running`);
     console.log(`🌐 Port: ${config.port}`);
     console.log(`🌍 Environment: ${config.nodeEnv}`);
-    console.log(`📚 API Docs: http://localhost:${config.port}/api-docs`);
+    console.log(`📚 API Docs: ${config.hostUrl}/api-docs`);
     console.log('=============================\n');
 };
 
@@ -90,7 +95,7 @@ const logServerStartup = (config: ServerConfiguration): void => {
 const startServer = async (config: ServerConfiguration): Promise<void> => {
     try {
         // CLAVE: Solo escuchar el puerto si NO es Vercel/Producción
-        if (process.env.NODE_ENV === 'development') {
+        if (config.nodeEnv === 'development') {
             const port = config.port || 3000;
 
             await new Promise<void>((resolve) => {
