@@ -46,10 +46,6 @@ const configureSwagger = (app: Application): void => {
  * @param app Express application instance
  */
 const configureRoutes = (app: Application): void => {
-    // HealthCheck route
-    app.use('/', healthCheck);
-    app.use('/api', healthCheck);
-
     // API routes
     app.use('/api', routes);
 };
@@ -73,6 +69,9 @@ const initializeApp = (): Application => {
     configureMiddleware(app);
     configureSwagger(app);
     configureRoutes(app);
+    // HealthCheck route
+    app.use('/', healthCheck);
+    app.use('/api', healthCheck);
     configureErrorHandling(app);
 
     return app;
