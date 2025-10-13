@@ -48,6 +48,10 @@ const configureSwagger = (app: Application): void => {
 const configureRoutes = (app: Application): void => {
     // API routes
     app.use('/api', routes);
+    
+    // HealthCheck route
+    app.use('/', healthCheck);
+    app.use('/api', healthCheck);
 };
 
 /**
@@ -69,9 +73,6 @@ const initializeApp = (): Application => {
     configureMiddleware(app);
     configureSwagger(app);
     configureRoutes(app);
-    // HealthCheck route
-    app.use('/', healthCheck);
-    app.use('/api', healthCheck);
     configureErrorHandling(app);
 
     return app;
