@@ -6,6 +6,7 @@ import swaggerUi from 'swagger-ui-express';
 import swaggerSpec from './src/config/swaggerConfig';
 import routes from './src/routes/index.routes';
 import errorHandler from './src/middleware/errorHandler';
+import healthCheck from './src/middleware/HealthCheck';
 import notFoundHandler from './src/middleware/notFoundHandler';
 import { ServerConfiguration } from './src/types/types';
 
@@ -36,8 +37,8 @@ const configureMiddleware = (app: Application): void => {
  */
 const configureSwagger = (app: Application): void => {
     // Serve Swagger UI at /api-docs
-    app.use('/api-docs', swaggerUi.serve);
-    app.get('/api-docs', swaggerUi.setup(swaggerSpec(config)));
+    app.use('/api/swagger', swaggerUi.serve);
+    app.get('/api/swagger', swaggerUi.setup(swaggerSpec(config)));
 };
 
 /**
@@ -45,6 +46,10 @@ const configureSwagger = (app: Application): void => {
  * @param app Express application instance
  */
 const configureRoutes = (app: Application): void => {
+    // HealthCheck route
+    app.use('/', healthCheck);
+    app.use('/api', healthCheck);
+
     // API routes
     app.use('/api', routes);
 };
@@ -84,7 +89,7 @@ const logServerStartup = (config: ServerConfiguration): void => {
     console.log(`🚀 Server Status: Running`);
     console.log(`🌐 Port: ${config.port}`);
     console.log(`🌍 Environment: ${config.env}`);
-    console.log(`📚 API Docs: ${config.hostUrl}/api-docs`);
+    console.log(`📚 API Docs: ${config.hostUrl}/api/swagger`);
     console.log('=============================\n');
 };
 

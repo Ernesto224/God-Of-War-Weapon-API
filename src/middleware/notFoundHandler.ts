@@ -9,7 +9,7 @@ const notFoundHandler = (req: Request, res: Response) => {
     message: `Route ${req.originalUrl} not found`
   };
 
-  res.status(notFoundCode).json(response);
+  return res.status(notFoundCode).json(response);
 
 }
 

@@ -1,3 +1,12 @@
+export interface HealthCheckResponse {
+  status: 'ok' | 'error';
+  timestamp: string;
+  uptime: number;
+  environment: string;
+  version: string;
+  service: string;
+}
+
 export interface ApplicationResponse<T = any> {
   success: boolean;
   message: string;

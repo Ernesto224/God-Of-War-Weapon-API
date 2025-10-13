@@ -1,4 +1,4 @@
-import express, { Router } from 'express';
+import express, { Router, Request, Response } from 'express';
 import gameRoutes from './game.routes';
 import weaponRoutes from './weapon.routes';
 

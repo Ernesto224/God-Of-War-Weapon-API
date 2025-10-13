@@ -17,7 +17,7 @@
 |----------------|-------------------|
 | Express        | MongoDB           |
 | Node.js        | -                 |
-| PrismaORM      | MongoDB           |
+| PrismaORM      | -                 |
 | nodemon        | -                 |
 | OpenAPI Swagger| -                 |
 
@@ -36,6 +36,11 @@
 ## ⚙️ Librerias utilizadas
 
 - date-fns v4.1.0
+- cors
+- dotenv
+- morgan
+- swagger-jsdoc
+- swagger-ui-express
 
 ---
 
@@ -48,14 +53,14 @@ git clone https://github.com/Ernesto224/God-Of-War-Weapon-API.git
 2. Instala dependencias en cliente y servidor:
 ```bash
 cd God-Of-War-Weapon-API
-npm install
+pnpm install
 ```
 3. Configura tus variables de entorno (.env) en la carpeta God-Of-War-Weapon-API.
 
 4. Ejecuta el proyecto:
 ```bash
 # En servidor
-npm run dev
+pnpm run dev
 ```
 
 ## 👥 Autor

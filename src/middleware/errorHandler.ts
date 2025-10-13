@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import { ApplicationResponse } from '../types/types';
 import { serverErrorCode } from '../utils/codes';
 
-const errorHandler = (err: any, req: Request, res: Response, next: NextFunction): void => {
+const errorHandler = (err: any, req: Request, res: Response, next: NextFunction) => {
 
   const response: ApplicationResponse = {
     success: false,
@@ -12,7 +12,7 @@ const errorHandler = (err: any, req: Request, res: Response, next: NextFunction)
     })
   };
 
-  res.status(err.status || serverErrorCode).json(response);
+  return res.status(err.status || serverErrorCode).json(response);
   
 };
 
