@@ -224,9 +224,13 @@ components:
       description: Represents a special combat move for a weapon
       type: object
       required:
+        - name
         - unlockLevel
         - combination
       properties:
+        name:
+          type: string
+          description: Movement's name
         unlockLevel:
           type: integer
           description: Character level required to unlock this move

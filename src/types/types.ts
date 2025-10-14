@@ -22,6 +22,7 @@ export interface ServerConfiguration {
 }
 
 export interface Movement {
+  name: String;
   unlockLevel: number;
   combination: string;
 }

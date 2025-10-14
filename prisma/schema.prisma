@@ -34,6 +34,7 @@ model Weapon {
 
 model Movement {
   id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
   unlockLevel Int
   combination String
   Weapon      Weapon? @relation(fields: [weaponId], references: [id])

@@ -19,6 +19,7 @@ const formatWeapon = (weapon: any): Weapon => ({
     archives: weapon.archives,
     maxLevel: weapon.maxLevel,
     movements: weapon.movements.map(movement => ({
+        name: movement.name,
         unlockLevel: movement.unlockLevel,
         combination: movement.combination
     }))
