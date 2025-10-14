@@ -1,4 +1,4 @@
-# Ω God-Of-War-Weapon-API
+[![Banner con el texto God-Of-War-Weapon-API](https://res.cloudinary.com/dks1ifnxa/image/upload/v1760419462/god-of-war-weapon-api-cover_zobysv.jpg)](https://god-of-war-weapon-api.vercel.app/api/swagger/)
 
 **God-Of-War-Weapon-API** es una API RESTful creada con la finalidad de ofrecer un servicio rápido y ligero, pensada para que los nuevos desarrolladores que estén comenzando en el consumo de servicios puedan realizar pruebas simples.
 
