@@ -125,6 +125,30 @@ paths:
             maximum: 50
             default: 10
           description: The number of weapons to retrieve per page
+        - in: query
+          name: searchCharacters
+          schema:
+            type: string
+          description: Text to search for in weapon name or description (case-insensitive)
+        - in: query
+          name: game
+          schema:
+            type: string
+          description: Filter weapons by associated game ID
+        - in: query
+          name: levelRankMin
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+          description: Minimum maxLevel (level rank) to include
+        - in: query
+          name: levelRankMax
+          schema:
+            type: integer
+            minimum: 1
+            default: 100
+          description: Maximum maxLevel (level rank) to include
       responses:
         '200':
           description: Successfully retrieved list of weapons

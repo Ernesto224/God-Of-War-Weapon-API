@@ -49,6 +49,13 @@ export interface PaginationParams {
   skip: number;
 }
 
+export interface FilterParams {
+  searchCharacters: string;
+  game: string;
+  levelRankMin: number;
+  levelRankMax: number;
+}
+
 export interface List<T = any> {
   count: number;
   pages: number;

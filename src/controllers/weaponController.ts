@@ -1,13 +1,15 @@
 import { Request, Response, NextFunction } from 'express';
-import { Weapon, ApplicationResponse } from '../types/types';
+import { Weapon, FilterParams } from '../types/types';
 import prismaClient from '../config/prismaConfig';
 import { successCode, noContentCode, badRequestCode, notFoundCode } from '../utils/codes';
-import { 
+import {
     calculatePagination,
     createPaginatedResponse,
     createErrorResponse,
-    createSuccessResponse
+    createSuccessResponse,
+    formatterFilters
 } from '../services/responseService';
+import { Prisma } from '@prisma/client';
 
 /**
  * Format a weapon from database to API response format
@@ -25,18 +27,51 @@ const formatWeapon = (weapon: any): Weapon => ({
     }))
 });
 
+/* 
+ * Management filters from prisma
+ */
+const buildWeaponWhereAndClause = (filters: FilterParams): Prisma.WeaponWhereInput[] => {
+
+    const andClause: Prisma.WeaponWhereInput[] = [ { maxLevel: { gte: filters.levelRankMin, lte: filters.levelRankMax } } ];
+
+    if ( filters.searchCharacters !== '' ) {
+        andClause.push(
+            { name: { contains: filters.searchCharacters } },
+            { description: { contains: filters.searchCharacters } }
+        );
+    }
+
+    if ( filters.game !== 'all' ) {
+        andClause.push(
+            { gameId: filters.game }
+        );
+    }
+
+    return andClause;
+}; 
+
 /**
  * Fetch weapons from database with pagination
  */
-const fetchPaginatedWeapons = async ({ skip, limit }: { skip: number, limit: number }) => {
+const fetchPaginatedWeapons = async ({ skip, limit }: { skip: number, limit: number }, filters: FilterParams) => {
+
+    const andClause = buildWeaponWhereAndClause( filters );
+
     return Promise.all([
         prismaClient.weapon.findMany({
             skip,
             take: limit,
+            where: {
+                AND: andClause,
+            },
             include: { movements: true },
-            orderBy: { name: 'asc' }
+            orderBy: { name: 'desc' },
         }),
-        prismaClient.weapon.count()
+        prismaClient.weapon.count({
+            where: {
+                AND: andClause,
+            }
+        })
     ]);
 };
 
@@ -50,7 +85,14 @@ export const getAllWeapons = async (req: Request, res: Response, next: NextFunct
             Number(req.query.limit)
         );
 
-        const [weapons, totalCount] = await fetchPaginatedWeapons(pagination);
+        const filters = formatterFilters(
+            String(req.query.searchCharacters),
+            String(req.query.game),
+            Number(req.query.levelRankMin),
+            Number(req.query.levelRankMax)
+        );
+
+        const [weapons, totalCount] = await fetchPaginatedWeapons(pagination, filters);
 
         if (totalCount === 0) {
             return res.status(noContentCode).json(
@@ -111,6 +153,6 @@ export const getWeapon = async (req: Request, res: Response, next: NextFunction)
     } catch (error) {
 
         next(error);
-        
+
     }
 }
